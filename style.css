@@ -4,7 +4,8 @@ body {
   min-height: 100vh;
   background: #1a0a2e;
   font-family: 'Lato', 'Georgia', serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
