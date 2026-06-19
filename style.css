@@ -1,0 +1,578 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: #1a0a2e;
+  font-family: 'Lato', 'Georgia', serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Rich dark-to-jewel background */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(106,27,154,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(173,20,87,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(74,20,140,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(21,101,192,0.25) 0%, transparent 45%),
+    linear-gradient(160deg, #120720 0%, #1e0a3c 35%, #2a0a2e 65%, #14051e 100%);
+  z-index: 0;
+}
+
+/* Star field */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+/* Gold dust particles */
+.gold-dust {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  animation: dustFloat linear infinite;
+  z-index: 2;
+}
+
+@keyframes dustFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-60px) rotate(360deg); opacity: 0; }
+}
+
+/* Floating petals (rise from bottom, drifting + spinning) */
+.petal {
+  position: fixed;
+  pointer-events: none;
+  animation: floatPetal linear infinite;
+  z-index: 2;
+}
+
+@keyframes floatPetal {
+  0% { transform: translateY(-80px) rotate(0deg) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 0.7; }
+  50% { transform: translateY(50vh) rotate(360deg) translateX(30px) scale(1.15); }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(110vh) rotate(720deg) translateX(-20px) scale(0.9); opacity: 0; }
+}
+
+/* Flying flowers that drift sideways across the whole screen, spinning */
+.flying-flower {
+  position: fixed;
+  pointer-events: none;
+  z-index: 3;
+  animation: flyAcross linear infinite;
+}
+
+@keyframes flyAcross {
+  0%   { transform: translate(-10vw, 0) rotate(0deg) scale(0.8); opacity: 0; }
+  8%   { opacity: 0.85; }
+  50%  { transform: translate(55vw, -6vh) rotate(360deg) scale(1.1); }
+  92%  { opacity: 0.5; }
+  100% { transform: translate(120vw, 4vh) rotate(720deg) scale(0.85); opacity: 0; }
+}
+
+/* === MAIN SCENE === */
+.scene {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Gold line accent */
+.gold-line {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 0 auto 4px;
+  animation: fadeDown 1.5s ease both;
+}
+
+.greeting {
+  text-align: center;
+  animation: fadeDown 1.2s ease both;
+}
+
+.greeting .pre-title {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  color: #d4af37;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.greeting h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 600;
+  font-style: italic;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(212,175,55,0.5), 0 0 80px rgba(212,175,55,0.2);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.greeting h1 span {
+  color: #f4c842;
+}
+
+.greeting .sub {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 2px;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   PHOTO PLACEHOLDER
+   Delete this entire rule block (down to the closing comment)
+   if you remove the placeholder div from index.html — nothing
+   else references these classes.
+============================================================= */
+.photo-placeholder {
+  width: 250px;
+  height: 250px;
+  border-radius: 18px;
+  border: 2px dashed rgba(212,175,55,0.45);
+  background: rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeDown 1.3s 0.1s ease both;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.photo-placeholder:hover {
+  border-color: rgba(212,175,55,0.75);
+  background: rgba(255,255,255,0.06);
+}
+
+.photo-placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(212,175,55,0.75);
+  text-align: center;
+  padding: 10px;
+}
+
+.photo-placeholder-inner span {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.55);
+  max-width: 110px;
+  line-height: 1.3;
+}
+
+/* If you swap in a real <img class="photo-img"> instead of the
+   placeholder icon, this makes it match the same rounded square
+   and crop nicely. Just keep the parent .photo-placeholder div. */
+
+ .photo-img {
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+/* ===================== END PHOTO PLACEHOLDER ===================== */
+
+/* === GIFT BOX === */
+.gift-wrapper {
+  animation: fadeUp 1.4s 0.4s ease both;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gift-box {
+  width: 180px;
+  height: 170px;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 16px 40px rgba(212,175,55,0.35)) drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  position: relative;
+  z-index: 2;
+}
+
+.gift-wrapper:hover .gift-box {
+  transform: scale(1.1) rotate(-3deg) translateY(-6px);
+  filter: drop-shadow(0 24px 50px rgba(212,175,55,0.5)) drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+}
+
+.gift-wrapper:active .gift-box {
+  transform: scale(0.95);
+}
+
+.click-hint {
+  margin-top: 14px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 0.82rem;
+  color: #d4af37;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* === ORBIT RING — flowers spinning slowly around the gift box ===
+   Optional decoration. To remove: delete the .orbit-ring block
+   from index.html and this entire CSS block. */
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  margin-top: -130px;
+  margin-left: -130px;
+  z-index: 1;
+  pointer-events: none;
+  animation: orbitSpin 18s linear infinite;
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* .orbit-pos fixes each flower's angle + distance on the ring (static).
+   .orbit-flower (nested inside) counter-spins so the emoji itself
+   stays upright while the whole ring rotates. */
+.orbit-pos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.orbit-flower {
+  position: absolute;
+  font-size: 1.4rem;
+  display: block;
+  animation: counterSpin 18s linear infinite;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+}
+
+@keyframes counterSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+.op1 { transform: rotate(0deg)   translate(128px, 0); }
+.op2 { transform: rotate(60deg)  translate(128px, 0); }
+.op3 { transform: rotate(120deg) translate(128px, 0); }
+.op4 { transform: rotate(180deg) translate(128px, 0); }
+.op5 { transform: rotate(240deg) translate(128px, 0); }
+.op6 { transform: rotate(300deg) translate(128px, 0); }
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,2,25,0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  padding: 16px;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* === BOUQUET CARD === */
+.bouquet-card {
+  background: linear-gradient(160deg, #1e0a3c 0%, #2d0f4e 40%, #1a0730 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 28px;
+  padding: 32px 36px 28px;
+  max-width: 680px;
+  width: 96vw;
+  max-height: 95vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(212,175,55,0.15),
+    0 40px 100px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(212,175,55,0.2);
+  transform: scale(0.55) translateY(80px);
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.bouquet-card::-webkit-scrollbar { width: 4px; }
+.bouquet-card::-webkit-scrollbar-track { background: transparent; }
+.bouquet-card::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 2px; }
+
+.modal-overlay.show .bouquet-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Inner shimmer */
+.bouquet-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.card-pre {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  color: #d4af37;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.bouquet-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-style: italic;
+  color: #fff;
+  margin-bottom: 4px;
+  text-shadow: 0 0 20px rgba(212,175,55,0.3);
+}
+
+.gold-divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 12px auto 20px;
+}
+
+/* Stage that holds the bouquet SVG + flying flowers around it */
+.bouquet-stage {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.bouquet-svg {
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  filter: drop-shadow(0 12px 40px rgba(212,175,55,0.12)) drop-shadow(0 4px 20px rgba(0,0,0,0.4));
+  position: relative;
+  z-index: 1;
+}
+
+/* Small flowers that drift and spin gently around the bouquet card.
+   Optional — delete the .fly-flower spans in index.html and this
+   block to remove. */
+.fly-flower {
+  position: absolute;
+  font-size: 1.3rem;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+  animation: flutter ease-in-out infinite;
+}
+
+@keyframes flutter {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  25%      { transform: translate(10px,-14px) rotate(90deg); }
+  50%      { transform: translate(-6px,-22px) rotate(180deg); }
+  75%      { transform: translate(-14px,-8px) rotate(270deg); }
+}
+
+.ff1 { top: 4%;  left: 2%;   animation-duration: 7s; }
+.ff2 { top: 0%;  left: 88%;  animation-duration: 8.5s; animation-delay: 0.6s; }
+.ff3 { top: 60%; left: -2%;  animation-duration: 6.5s; animation-delay: 1.2s; }
+.ff4 { top: 68%; left: 92%;  animation-duration: 9s;   animation-delay: 0.3s; }
+.ff5 { top: 30%; left: 96%;  animation-duration: 7.5s; animation-delay: 1.8s; }
+.ff6 { top: 86%; left: 6%;   animation-duration: 8s;   animation-delay: 0.9s; }
+
+/* Flower tags */
+.flower-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.flower-tags span {
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  color: #e8c96a;
+  letter-spacing: 0.4px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+/* Message */
+.message-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+
+.message-box .from-sama {
+  font-size: 0.72rem;
+  color: #d4af37;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.message-box p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.grad-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #d4af37, #f4c842);
+  color: #1a0a2e;
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 0.78rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.close-btn {
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: #1a0a2e;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 32px;
+  font-size: 0.85rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 24px rgba(212,175,55,0.35);
+}
+
+.close-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(212,175,55,0.5);
+}
+
+/* === BURST / CONFETTI === */
+.burst {
+  position: fixed;
+  pointer-events: none;
+  z-index: 200;
+  animation: burstAway ease-out forwards;
+}
+
+@keyframes burstAway {
+  0% { opacity: 1; transform: translate(0,0) scale(1.2); }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+}
+
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+  z-index: 180;
+}
+
+@keyframes confettiFall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg) scaleX(1); }
+  50% { transform: translateY(45vh) rotate(360deg) scaleX(-1); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scaleX(1); }
+}
+
+.heart-float {
+  position: fixed;
+  pointer-events: none;
+  animation: heartRise ease-out forwards;
+  z-index: 150;
+}
+
+@keyframes heartRise {
+  0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(-280px) scale(0.4) rotate(20deg); }
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .orbit-ring { width: 200px; height: 200px; margin-top: -100px; margin-left: -100px; }
+  .op1 { transform: rotate(0deg)   translate(98px, 0); }
+  .op2 { transform: rotate(60deg)  translate(98px, 0); }
+  .op3 { transform: rotate(120deg) translate(98px, 0); }
+  .op4 { transform: rotate(180deg) translate(98px, 0); }
+  .op5 { transform: rotate(240deg) translate(98px, 0); }
+  .op6 { transform: rotate(300deg) translate(98px, 0); }
+  .photo-placeholder { width: 120px; height: 120px; }
+}
