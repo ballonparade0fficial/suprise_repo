@@ -577,3 +577,10 @@ body {
   .op6 { transform: rotate(300deg) translate(98px, 0); }
   .photo-placeholder { width: 120px; height: 120px; }
 }
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(4px);
+  }
+}

@@ -51,7 +51,8 @@ for (let i = 0; i < 10; i++) {
 
 function spawnBurst(x, y) {
   const items = ['🌸', '🌺', '🌷', '💫', '✨', '🌹', '🎓', '🎊', '⭐', '💛', '🥂'];
-  for (let i = 0; i < 22; i++) {
+  const count = window.innerWidth < 768 ? 12 : 22;
+  for (let i = 0; i < count; i++){
     const b = document.createElement('div');
     b.className = 'burst';
     b.textContent = items[Math.floor(Math.random() * items.length)];
@@ -65,19 +66,38 @@ function spawnBurst(x, y) {
   }
 }
 
+// function spawnConfetti() {
+//   const colors = ['#d4af37', '#f4c842', '#e91e63', '#ab47bc', '#7c4dff', '#f06292', '#ce93d8', '#80cbc4', '#fff8dc', '#ff80ab'];
+//   for (let i = 0; i < 90; i++) {
+//     setTimeout(() => {
+//       const c = document.createElement('div');
+//       c.className = 'confetti';
+//       const w = 6 + Math.random() * 10;
+//       const h = 4 + Math.random() * 10;
+//       c.style.cssText = `left:${Math.random()*100}vw;top:-14px;width:${w}px;height:${h}px;background:${colors[Math.floor(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${2.5+Math.random()*3.5}s;animation-delay:${Math.random()*0.8}s`;
+//       document.body.appendChild(c);
+//       setTimeout(() => c.remove(), 5000);
+//     }, i * 30);
+//   }
+// }
+
 function spawnConfetti() {
+  const isMobile = window.innerWidth < 768;
+  const count = isMobile ? 35 : 90;
   const colors = ['#d4af37', '#f4c842', '#e91e63', '#ab47bc', '#7c4dff', '#f06292', '#ce93d8', '#80cbc4', '#fff8dc', '#ff80ab'];
-  for (let i = 0; i < 90; i++) {
-    setTimeout(() => {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      const w = 6 + Math.random() * 10;
-      const h = 4 + Math.random() * 10;
-      c.style.cssText = `left:${Math.random()*100}vw;top:-14px;width:${w}px;height:${h}px;background:${colors[Math.floor(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${2.5+Math.random()*3.5}s;animation-delay:${Math.random()*0.8}s`;
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 5000);
-    }, i * 30);
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    const w = 6 + Math.random() * 10;
+    const h = 4 + Math.random() * 10;
+    c.style.cssText = `left:${Math.random()*100}vw;top:-14px;width:${w}px;height:${h}px;background:${colors[Math.floor(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${2.5+Math.random()*3.5}s;animation-delay:${Math.random()*0.8}s`;
+    frag.appendChild(c);
   }
+  document.body.appendChild(frag);
+  setTimeout(() => {
+    document.querySelectorAll('.confetti').forEach(el => el.remove());
+  }, 7000);
 }
 
 function spawnHearts() {
